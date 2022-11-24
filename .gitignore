@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 
 /springboot/target/
+
+/springboot/src/main/resources/application-ssl.yml
