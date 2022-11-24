@@ -117,11 +117,11 @@
             label="消极概率">
         </el-table-column>
 
-        <el-table-column label="操作" min-width="100px">
-          <template #default="scope">
-            <el-button size="mini" @click="handleTest(scope.row.id)">测试</el-button>
-          </template>
-        </el-table-column>
+<!--        <el-table-column label="操作" min-width="100px">-->
+<!--          <template #default="scope">-->
+<!--            <el-button size="mini" @click="handleTest(scope.row.id)">测试</el-button>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
 
       <div style="margin: 10px 0">
