@@ -245,7 +245,7 @@ export default {
           this.showTask = true;
           setTimeout(()=>{
             this.drawLine()
-          },2000)
+          },20000)
         }
         else{
           this.$message({
