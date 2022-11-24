@@ -116,7 +116,7 @@ public class NewsMessageController extends BaseController{
                               @RequestParam(required = false, defaultValue = "") Integer newsId,
                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                                 @RequestParam(required = false, defaultValue = "10") Integer pageSize) throws InterruptedException {
-        // test
+        // 保存原始代码
         LambdaQueryWrapper<NewsMessage> query = Wrappers.<NewsMessage>lambdaQuery()
                         .like(NewsMessage::getContent, name).
                         orderByDesc(NewsMessage::getId);
