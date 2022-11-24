@@ -176,8 +176,8 @@ public class NewsMessageController extends BaseController {
             newsMessage.stream().filter(c -> c.getId().equals(parentId)).findFirst().ifPresent(message::setParentMessage);
         }
 
-        rst.put("fmdf", t_fm.divide(BigDecimal.valueOf(newsMessage.size()), 2, BigDecimal.ROUND_HALF_UP));
-        rst.put("zmdf", t_zm.divide(BigDecimal.valueOf(newsMessage.size()), 2, BigDecimal.ROUND_HALF_UP));
+        rst.put("fmdf", t_fm.divide(BigDecimal.valueOf(newsMessage.size()), 4, BigDecimal.ROUND_HALF_UP));
+        rst.put("zmdf", t_zm.divide(BigDecimal.valueOf(newsMessage.size()), 4, BigDecimal.ROUND_HALF_UP));
 
 
         pages.setRecords(newsMessage);
@@ -236,7 +236,7 @@ public class NewsMessageController extends BaseController {
         System.out.println("耗时: " + (endTime - startTime) + "毫秒");
         System.out.println("耗时: " + (endTime - startTime) / 1000 + "秒");
 
-        return result.multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+        return result.multiply(new BigDecimal(100)).setScale(4, BigDecimal.ROUND_HALF_UP).toString();
     }
 
     String initZmdfTest(String str) throws InterruptedException {
@@ -250,13 +250,13 @@ public class NewsMessageController extends BaseController {
 
 
     String getFmdf(String zmdf) {
-        BigDecimal z = new BigDecimal(zmdf).setScale(6, BigDecimal.ROUND_HALF_UP);
-        BigDecimal f = BigDecimal.valueOf(100).subtract(z);
+        BigDecimal z = new BigDecimal(zmdf).setScale(4, BigDecimal.ROUND_HALF_UP);
+        BigDecimal f = BigDecimal.valueOf(100).subtract(z).setScale(4, BigDecimal.ROUND_HALF_UP);
         return f.toString();
     }
 
     BigDecimal getTotal(BigDecimal start, String df) {
-        BigDecimal z = new BigDecimal(df).setScale(6, BigDecimal.ROUND_HALF_UP);
+        BigDecimal z = new BigDecimal(df).setScale(4, BigDecimal.ROUND_HALF_UP);
         return start.add(z);
     }
 
