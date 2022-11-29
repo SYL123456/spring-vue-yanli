@@ -10,6 +10,7 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.Result;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.News;
+import com.example.demo.entity.NewsMessage;
 import com.example.demo.entity.NewsShoucang;
 import com.example.demo.enums.NewsCatEnum;
 import com.example.demo.enums.NewsTypeEnum;
@@ -36,6 +37,17 @@ public class NewsController extends BaseController {
     @Resource
     NewsMessageMapper newsMessageMapper;
 
+    @PostMapping("/updateSort")
+    public Result<?> updateSort(@RequestBody News news) {
+        newsMapper.updateSort(news.getId());
+        return Result.success();
+    }
+
+    @PostMapping("/updateSort2")
+    public Result<?> updateSort2(@RequestBody News news) {
+        newsMapper.updateSort2(news.getId());
+        return Result.success();
+    }
     @GetMapping("/listNewsPic")
     public Result<?> listNewsPic() {
         LambdaQueryWrapper<News> wrapper = Wrappers.<News>lambdaQuery();
@@ -259,6 +271,7 @@ public class NewsController extends BaseController {
                                 @RequestParam(required = false) Integer catId,
                                 @RequestParam(required = false) Integer type) {
         LambdaQueryWrapper<News> wrapper = Wrappers.<News>lambdaQuery();
+        wrapper.orderByDesc(News::getSort);
         if (StrUtil.isNotBlank(search)) {
             wrapper.like(News::getTitle, search);
         }

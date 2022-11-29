@@ -39,6 +39,8 @@ public class NewsMessage extends Model<NewsMessage> {
 
     Integer messageStatus;//0 待审核 1审核通过
 
+    Integer sort;//排序
+
     @TableField(exist = false)
     private NewsMessage parentMessage;
 

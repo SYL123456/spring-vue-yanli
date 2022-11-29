@@ -29,6 +29,8 @@ public class News {
     //类别名称
     String typeName;
 
+    Integer sort;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date time;
     String defaultImage;

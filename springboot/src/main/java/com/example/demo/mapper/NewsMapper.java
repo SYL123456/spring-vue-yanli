@@ -12,4 +12,8 @@ public interface NewsMapper extends BaseMapper<News> {
 
     @Update("update news set news_status = #{new_status} where id = #{id}")
     int updateStatus(int new_status,int id);
+    @Update("update news set sort = 1  where id = #{id}")
+    int updateSort(long id);
+    @Update("update news set sort = 0  where id = #{id}")
+    int updateSort2(long id);
 }

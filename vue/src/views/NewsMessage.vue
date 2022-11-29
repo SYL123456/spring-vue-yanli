@@ -21,7 +21,7 @@
         </el-table-column>
         <el-table-column
             prop="content" min-width="100px"
-            label="内容">
+            label="评论内容">
         </el-table-column>
         <el-table-column
             prop="username"
@@ -38,8 +38,18 @@
             prop="time"  min-width="100px"
             label="时间">
         </el-table-column>
-        <el-table-column label="审核" min-width="100px">
+        <el-table-column label="审核" min-width="150px">
           <template #default="scope">
+            <el-popconfirm title="确定置顶吗？" v-if="scope.row.messageStatus != 0 &&scope.row.sort == 0" @confirm="updateSort1(scope.row)">
+              <template #reference>
+                <el-button size="mini" >置顶</el-button>
+              </template>
+            </el-popconfirm>
+            <el-popconfirm title="确定取消置顶吗？" v-if="scope.row.messageStatus != 0 &&scope.row.sort == 1" @confirm="updateSort2(scope.row)">
+              <template #reference>
+                <el-button size="mini" >取消置顶</el-button>
+              </template>
+            </el-popconfirm>
             <el-popconfirm title="确定上线吗？" v-if="scope.row.messageStatus != 1" @confirm="updateStatusUp(scope.row)">
               <template #reference>
                 <el-button size="mini" >通过</el-button>
@@ -110,6 +120,46 @@ export default {
 
   },
   methods: {
+    updateSort2(row){
+      let n = row
+      // this.$set(n, "newsStatus", 1);
+      request.post("/newsMessage/updateSort2", n).then(res => {
+        console.log(res)
+        if (res.code === '0') {
+          this.$message({
+            type: "success",
+            message: "更新成功"
+          })
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+
+        this.loadMessage()
+      })
+    },
+    updateSort1(row){
+      let n = row
+      // this.$set(n, "newsStatus", 1);
+      request.post("/newsMessage/updateSort", n).then(res => {
+        console.log(res)
+        if (res.code === '0') {
+          this.$message({
+            type: "success",
+            message: "更新成功"
+          })
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+
+        this.loadMessage()
+      })
+    },
     loadMessage() {
       // 如果是留言的话，就写死=0
       // 如果是 评论，则需要设置 当前被评论的模块的id作为foreignId

@@ -41,6 +41,18 @@ public class NewsMessageController extends BaseController {
     @Resource
     private PythonClient pythonClient;
 
+    @PostMapping("/updateSort")
+    public Result<?> updateSort(@RequestBody NewsMessage newsMessage) {
+        newsMessageMapper.updateSort(newsMessage.getId());
+        return Result.success();
+    }
+
+    @PostMapping("/updateSort2")
+    public Result<?> updateSort2(@RequestBody NewsMessage newsMessage) {
+        newsMessageMapper.updateSort2(newsMessage.getId());
+        return Result.success();
+    }
+
     @PostMapping("/updateStatusDown")
     public Result<?> updateStatusDown(@RequestBody NewsMessage newsMessage) {
         newsMessageMapper.updateStatus(0, newsMessage.getId());
@@ -150,6 +162,8 @@ public class NewsMessageController extends BaseController {
         List<Member> memberList = memberMapper.selectList(Wrappers.<Member>lambdaQuery().in(Member::getUsername, memberNameList));
         Map<String, String> memberUserNameAndAvatarMap = memberList.stream().collect(Collectors.toMap(Member::getUsername, Member::getAvatar));
 
+        int i = 0;
+        int i2= 0;
         for (NewsMessage message : newsMessage) {
             // 设置新闻标题
             int newId = message.getNewsId().intValue();
@@ -162,6 +176,8 @@ public class NewsMessageController extends BaseController {
             if (!Objects.isNull(newsId)) {
 //                String zmdf = initZmdfTest(message.getContent());
                 String zmdf = initZmdf(message.getContent());
+                // 80
+
                 String fmdf = getFmdf(zmdf);
                 message.setZmdf(zmdf);
                 message.setFmdf(fmdf);
@@ -197,14 +213,15 @@ public class NewsMessageController extends BaseController {
      * 获取新闻数据
      */
     private IPage<NewsMessage> getNewsMessage(Integer queryMstatus,
-                                              String name,
-                                              Integer newsId,
-                                              Integer pageNum,
-                                              Integer pageSize) {
-        LambdaQueryWrapper<NewsMessage> query = Wrappers.<NewsMessage>lambdaQuery()
-                .like(NewsMessage::getContent, name).
-                orderByDesc(NewsMessage::getId);
-
+                String name,
+                Integer newsId,
+                Integer pageNum,
+                Integer pageSize) {
+            LambdaQueryWrapper<NewsMessage> query = Wrappers.<NewsMessage>lambdaQuery()
+                    .like(NewsMessage::getContent, name)
+                    .orderByDesc(NewsMessage::getSort)
+                    .orderByDesc(NewsMessage::getId);
+//            wrapper.orderByDesc(News::getSort);
         if (newsId != null) {
             query.eq(NewsMessage::getNewsId, newsId);
         }

@@ -76,6 +76,19 @@
             </el-table-column>
             <el-table-column label="操作" min-width="200px">
                 <template #default="scope">
+
+                  <el-popconfirm title="确定置顶吗？" v-if="scope.row.sort == 0" @confirm="updateSort1(scope.row)">
+                    <template #reference>
+                      <el-button size="mini" >置顶</el-button>
+                    </template>
+                  </el-popconfirm>
+                  <el-popconfirm title="确定取消置顶吗？" v-if="scope.row.sort == 1" @confirm="updateSort2(scope.row)">
+                    <template #reference>
+                      <el-button size="mini" >取消置顶</el-button>
+                    </template>
+                  </el-popconfirm>
+
+
                     <el-button size="mini" @click="details(scope.row)">详情</el-button>
                     <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
                     <el-popconfirm title="确定删除吗？" @confirm="del(scope.row.id)">
@@ -231,6 +244,46 @@
             this.load()
         },
         methods: {
+          updateSort2(row){
+            let n = row
+            // this.$set(n, "newsStatus", 1);
+            request.post("/news/updateSort2", n).then(res => {
+              console.log(res)
+              if (res.code === '0') {
+                this.$message({
+                  type: "success",
+                  message: "更新成功"
+                })
+              } else {
+                this.$message({
+                  type: "error",
+                  message: res.msg
+                })
+              }
+
+              this.load()
+            })
+          },
+          updateSort1(row){
+            let n = row
+            // this.$set(n, "newsStatus", 1);
+            request.post("/news/updateSort", n).then(res => {
+              console.log(res)
+              if (res.code === '0') {
+                this.$message({
+                  type: "success",
+                  message: "更新成功"
+                })
+              } else {
+                this.$message({
+                  type: "error",
+                  message: res.msg
+                })
+              }
+
+              this.load()
+            })
+          },
             details(row) {
                 this.detail = row
                 this.vis = true
@@ -249,7 +302,8 @@
                     params: {
                         pageNum: this.currentPage,
                         pageSize: this.pageSize,
-                        search: this.search
+                        search: this.search,
+                        catId:'3'
                     }
                 }).then(res => {
                     this.loading = false

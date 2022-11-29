@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "caniuse-lite": "^1.0.30001434",
     "core-js": "^3.16.2",
     "echarts": "^5.1.2",
     "element-plus": "^1.0.2-beta.71",
