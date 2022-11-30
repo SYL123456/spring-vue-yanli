@@ -303,7 +303,7 @@
                         pageNum: this.currentPage,
                         pageSize: this.pageSize,
                         search: this.search,
-                        catId:'3'
+                        // catId:'3'
                     }
                 }).then(res => {
                     this.loading = false
